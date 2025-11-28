@@ -32,4 +32,6 @@ const router = express.Router();
  */
 router.get('/', healthController.check.bind(healthController));
 
+// Note: /api/auth routes are mounted from app.js using ./routes/auth
+
 module.exports = router;

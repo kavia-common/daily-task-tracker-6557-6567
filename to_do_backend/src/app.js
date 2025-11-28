@@ -3,12 +3,16 @@ const express = require('express');
 const routes = require('./routes');
 const swaggerUi = require('swagger-ui-express');
 const swaggerSpec = require('../swagger');
+const authRoutes = require('./routes/auth');
 
 // Initialize express app
 const app = express();
 
+const FRONTEND_ORIGIN = process.env.NG_APP_FRONTEND_URL || process.env.FRONTEND_ORIGIN || '*';
+
 app.use(cors({
-  origin: '*',
+  origin: FRONTEND_ORIGIN,
+  credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization']
 }));
@@ -38,10 +42,11 @@ app.use('/docs', swaggerUi.serve, (req, res, next) => {
   swaggerUi.setup(dynamicSpec)(req, res, next);
 });
 
-// Parse JSON request body
+/* Parse JSON request body */
 app.use(express.json());
 
-// Mount routes
+/* Mount routes */
+app.use('/api/auth', authRoutes);
 app.use('/', routes);
 
 // Error handling middleware
