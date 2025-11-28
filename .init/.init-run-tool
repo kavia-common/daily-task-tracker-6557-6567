@@ -1,0 +1,4 @@
+{
+    "command": "CI=true PORT=<port> HOST=<host> npm run dev",
+    "working_directory": "/home/kavia/workspace/code-generation/daily-task-tracker-6557-6567/to_do_backend"
+}
